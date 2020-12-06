@@ -1,10 +1,16 @@
 from telegram import ChatPermissions
 import logging
+from .update_db import connect_mongo, is_qualified
 
 def ban_rights(update, context):
 	"""Ban all rights except send text when first enter group"""
-	
+
 	logging.info("restricted")
+
+	collection = connect_mongo()
+	if is_qualified(update.message.from_user.id, collection): # returned user will have default privileges of the group
+		return
+
 	permissions = ChatPermissions(can_send_messages = True, can_send_media_messages = False, 
 		can_send_polls = False, can_send_other_messages = False, can_add_web_page_previews = False,
 		can_change_info = False, can_invite_users = False, can_pin_messages = False)

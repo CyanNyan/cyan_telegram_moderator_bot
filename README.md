@@ -9,6 +9,10 @@ Set up the bot token in your however you want, for example:
 
 `export TOKEN=YOURTOKEN`
 
+Set up the MongoDB url, and set up your [MangoDB Server](https://docs.mongodb.com/manual/installation/)
+
+`export DATABASE_URL=YOURURL`
+
 Install the dependencies:
 
 `pip install -r requirements.txt`
@@ -16,6 +20,15 @@ Install the dependencies:
 Run the script:
 
 `python -m cyan_telegram_moderator_bot`
+
+
+## Details
+
+When new user enters chat, the bot first ban all rights except 'Send Text'.
+
+When any user send a new message, the bot will create the user's profile if not exists, and increment the user's message count.
+
+When the user has reached the message threshold, regular user privileges will be given to that user. 
 
 <!-- ### Prerequisites
 
