@@ -15,7 +15,7 @@ Install the dependencies:
 
 Run the script:
 
-`python cyan.py`
+`python -m cyan_telegram_moderator_bot`
 
 <!-- ### Prerequisites
 
