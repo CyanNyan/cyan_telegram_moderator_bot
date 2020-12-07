@@ -17,11 +17,11 @@ Install the dependencies:
 
 PS: Please note that this project is based on python3, please do not use python2  
 
-`pip install -r requirements.txt` or 'pip3 install -r requirements.txt'
+`pip install -r requirements.txt` or `pip3 install -r requirements.txt`
 
 Run the script:
 
-`python -m cyan_telegram_moderator_bot` or 'python3 -m cyan_telegram_moderator_bot'
+`python -m cyan_telegram_moderator_bot` or `python3 -m cyan_telegram_moderator_bot`
 
 
 ## Details
