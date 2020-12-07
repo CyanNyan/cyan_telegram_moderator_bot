@@ -24,7 +24,7 @@ def init_user(userid, username, first_name, last_name, collection):
     collection.insert_one(post)
 
 def is_qualified(user_id, collection):
-    if collection.count_documents({'user_id': user_id, 'count': {"$gte": 3}}, limit = 1):
+    if collection.count_documents({'user_id': user_id, 'count': {"$gte": 60}}, limit = 1):
         return True
 
 

@@ -5,9 +5,13 @@ from .ban_rights import ban_rights
 from .release_rights import release_rights
 from .update_db import update_db
 
-def start(update, context):
-	logging.info("start detected")
+def echo(update, context):
+	logging.info("echo detected")
 	context.bot.send_message(chat_id=update.effective_chat.id, text="Cyan is cute!")
+
+def meow(update, context):
+        logging.info("meow detected")
+        context.bot.send_message(chat_id=update.effective_chat.id, text="喵喵喵?")
 
 def is_qualified(user_id):
 	"""Check if the member has reached the required number of sent messages
@@ -18,14 +22,17 @@ def is_qualified(user_id):
 	pass
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
-logging.info("start")
+logging.info("echo")
+logging.info("meow")
 
 updater = Updater(token=os.environ['TOKEN'], use_context=True)
 dispatcher = updater.dispatcher
-start_handler = CommandHandler('start', start)
+echo_handler = CommandHandler('echo', echo)
+meow_handler = CommandHandler('meow', meow)
 
 # send start message
-dispatcher.add_handler(start_handler)
+dispatcher.add_handler(echo_handler)
+dispatcher.add_handler(meow_handler)
 
 # ban the rights except 'Send Text' for new useres
 dispatcher.add_handler(MessageHandler(Filters.status_update.new_chat_members, ban_rights))
