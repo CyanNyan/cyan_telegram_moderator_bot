@@ -15,11 +15,13 @@ Set up the MongoDB url, and set up your [MangoDB Server](https://docs.mongodb.co
 
 Install the dependencies:
 
-`pip install -r requirements.txt`
+PS: Please note that this project is based on python3, please do not use python2  
+
+`pip install -r requirements.txt` or 'pip3 install -r requirements.txt'
 
 Run the script:
 
-`python -m cyan_telegram_moderator_bot`
+`python -m cyan_telegram_moderator_bot` or 'python3 -m cyan_telegram_moderator_bot'
 
 
 ## Details
