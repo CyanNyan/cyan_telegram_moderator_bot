@@ -15,7 +15,7 @@ def migrate(update, context):
         version = VERSION_NAMES[version_name]
         message = VERSIONS[version](update, context)
         update.effective_chat.send_message(
-            'Migration completed! ��\nNew version: v{} ({})\n{}'.format(version, version_name, message))
+            'Migration completed! 🎉\nNew version: v{} ({})\n{}'.format(version, version_name, message))
 
 
 logging.basicConfig(
