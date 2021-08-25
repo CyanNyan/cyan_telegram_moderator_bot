@@ -1,30 +1,28 @@
-from telegram import ChatPermissions
 import logging
-from .update_db import connect_mongo, is_qualified
+from .update_db import is_qualified
+from .db import collection_group
+from .permissions import RESTRICTED_PERMISSIONS, RELEASED_PERMISSIONS
+
 
 def ban_rights(update, context):
-	"""Ban all rights except send text when first enter group"""
+    """Ban all rights except send text when first enter group"""
+    group_info = collection_group().find_one({'chat_id': update.effective_chat.id})
 
-	logging.info("restricted")
+    for new_member in update.message.new_chat_members:
+        # receive info from new member
+        # set the right in permissions
+        if is_qualified(update.effective_chat.id, new_member.id):
+            logging.info('{} is already qualified!'.format(new_member.first_name))
+            context.bot.restrict_chat_member(
+                update.message.chat_id, new_member.id, RELEASED_PERMISSIONS)
+        else:
+            logging.info('{} is restricted!'.format(new_member.first_name))
+            context.bot.restrict_chat_member(
+                update.message.chat_id, new_member.id, RESTRICTED_PERMISSIONS)
 
-	collection = connect_mongo()
-	if is_qualified(update.message.from_user.id, collection): # returned user will have default privileges of the group
-		return
-
-	permissions = ChatPermissions(can_send_messages = True, can_send_media_messages = False, 
-		can_send_polls = False, can_send_other_messages = False, can_add_web_page_previews = False,
-		can_change_info = False, can_invite_users = False, can_pin_messages = False)
-
-	for new_member in update.message.new_chat_members:
-		# receive info from new member
-		callback_id = str(new_member.id)
-		# set the right in permissions
-
-		logging.info("restricted")
-		context.bot.restrict_chat_member(update.message.chat_id, new_member.id, permissions)
-
-	update.message.reply_text(
-		'Hello, ' +
-		new_member.first_name +
-		'. Welcome to the group! Please stay active so you can send sticker and media later XD'
-		)
+        if group_info:
+            welcome_text = group_info['welcome_message']
+            update.message.reply_text(welcome_text.format(
+                first_name=new_member.first_name,
+                last_name=new_member.last_name
+            ))

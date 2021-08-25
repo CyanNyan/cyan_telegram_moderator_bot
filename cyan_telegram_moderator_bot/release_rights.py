@@ -1,22 +1,25 @@
-from telegram import ChatPermissions
 import logging
+from .permissions import RELEASED_PERMISSIONS
+from telegram.constants import CHATMEMBER_CREATOR, CHATMEMBER_ADMINISTRATOR
 
-def release_rights(update, context, user_id):
-	"""When the user is qualified(see is_qualified), enable other user permissions
 
-	The enabled permissions include:
-	 'Send Media',
-	 'Send Sticker & GIFs',
-	 'Send Polls',
-	 'Embed Links',
-	 'Add User'
+def release_rights(bot, chat_id, user_id):
+    """When the user is qualified(see is_qualified), enable other user permissions
 
-	"""
-	
-	logging.info("Releasing right")
-	permissions = ChatPermissions(can_send_messages = True, can_send_media_messages = True, 
-		can_send_polls = True, can_send_other_messages = True, can_add_web_page_previews = True,
-		can_change_info = False, can_invite_users = True, can_pin_messages = False)
+    The enabled permissions include:
+     'Send Media',
+     'Send Sticker & GIFs',
+     'Send Polls',
+     'Embed Links',
+     'Add User'
 
-	context.bot.restrict_chat_member(update.message.chat_id, user_id, permissions)
-	logging.info("Should be released")
+    """
+
+    logging.info("Releasing right")
+    chat_member = bot.get_chat_member(chat_id, user_id)
+    if chat_member.status in {CHATMEMBER_CREATOR, CHATMEMBER_ADMINISTRATOR}:
+        logging.info('Skip creator or administrator!')
+        return
+
+    bot.restrict_chat_member(chat_id, user_id, RELEASED_PERMISSIONS)
+    logging.info("Should be released")
