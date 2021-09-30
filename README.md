@@ -9,7 +9,7 @@ Set up the bot token in your however you want, for example:
 
 `export TOKEN=YOURTOKEN`
 
-Set up the MongoDB url, and set up your [MangoDB Server](https://docs.mongodb.com/manual/installation/)
+Set up the MongoDB url, and set up your [MongoDB Server](https://docs.mongodb.com/manual/installation/)
 
 `export DATABASE_URL=YOURURL`
 
